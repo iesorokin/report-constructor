@@ -31,7 +31,7 @@ public class Swagger {
 
     private ApiInfo getApiInfo() {
         return new ApiInfo("Report constructor API Documentation",
-                "Documentation generated automatically",
+                "There is API documentation of report-constructor",
                 buildVersion,
                 "",
                 ApiInfo.DEFAULT_CONTACT,

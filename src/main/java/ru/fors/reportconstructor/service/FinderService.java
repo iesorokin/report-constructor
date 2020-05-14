@@ -3,6 +3,8 @@ package ru.fors.reportconstructor.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @AllArgsConstructor
 @Service
 public class FinderService {
@@ -17,11 +19,11 @@ public class FinderService {
         return "String";
     }
 
-    public String findRows() {
+    public Collection<String> findFields(String table) {
         return dbService.findRows();
     }
 
-    public String findColumns() {
-        return null;
+    public Collection<String> findTables() {
+        return dbService.findTables();
     }
 }

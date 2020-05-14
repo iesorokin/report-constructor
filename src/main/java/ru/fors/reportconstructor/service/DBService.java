@@ -12,12 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class DBService {
-    public String findRows() {
+    public Collection<String> findRows() {
 
         List<Employee> result = new ArrayList<>();
 
@@ -55,6 +56,10 @@ public class DBService {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public Collection<String> findTables() {
         return null;
     }
 }
