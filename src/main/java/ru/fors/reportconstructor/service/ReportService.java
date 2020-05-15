@@ -13,17 +13,17 @@ public class ReportService {
 
     public Report createReport(ReportRequest reportRequest){
 
-//        dbService.findByParam();
+        dbService.createReport(reportRequest);
 
 
         return new Report();
     }
 
     public Report getReport(String reportId) {
-        return null;
+        return dbService.findReport(reportId);
     }
 
     public Report updateReport(String reportId, ReportRequest reportRequest) {
-        return null;
+        return dbService.updateReport(reportId, reportId);
     }
 }

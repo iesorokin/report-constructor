@@ -3,6 +3,10 @@ package ru.fors.reportconstructor.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.fors.reportconstructor.entity.Employee;
+import ru.fors.reportconstructor.entity.Field;
+import ru.fors.reportconstructor.entity.Report;
+import ru.fors.reportconstructor.entity.Table;
+import ru.fors.reportconstructor.web.dto.ReportRequest;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -18,11 +22,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class DBService {
-    public Collection<String> findRows() {
+    public Collection<Field> findRows() {
 
-        List<Employee> result = new ArrayList<>();
+        List<Field> result = new ArrayList<>();
 
-        String SQL_SELECT = "Select * from EMPLOYEE";
+        String SQL_SELECT = "SELECT * FROM information_schema.tables WHERE table_schema = our_schema_name";
 
         // auto close connection and preparedStatement
         try (Connection conn = DriverManager.getConnection(
@@ -33,17 +37,10 @@ public class DBService {
 
             while (resultSet.next()) {
 
-                long id = resultSet.getLong("ID");
-                String name = resultSet.getString("NAME");
-                BigDecimal salary = resultSet.getBigDecimal("SALARY");
-                Timestamp createdDate = resultSet.getTimestamp("CREATED_DATE");
+                String id = resultSet.getString("ID");
 
-                Employee obj = new Employee();
+                Field obj = new Field();
                 obj.setId(id);
-                obj.setName(name);
-                obj.setSalary(salary);
-                // Timestamp -> LocalDateTime
-                obj.setCreatedDate(createdDate.toLocalDateTime());
 
                 result.add(obj);
 
@@ -56,10 +53,138 @@ public class DBService {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 
-    public Collection<String> findTables() {
-        return null;
+    public Collection<Table> findTables() {
+
+        List<Table> result = new ArrayList<>();
+
+        String SQL_SELECT = "SELECT schema_name FROM information_schema.schemata";
+
+        // auto close connection and preparedStatement
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "password1");
+             PreparedStatement preparedStatement = conn.prepareStatement(SQL_SELECT)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("ID");
+
+                Table obj = new Table();
+                obj.setId(id);
+
+                result.add(obj);
+
+            }
+            result.forEach(x -> System.out.println(x));
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Report findReport(String reportId) {
+        List<Report> result = new ArrayList<>();
+
+        String SQL_SELECT = "SELECT schema_name FROM information_schema.schemata WHERE IDENTITY";
+
+        // auto close connection and preparedStatement
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "password1");
+             PreparedStatement preparedStatement = conn.prepareStatement(SQL_SELECT)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("ID");
+
+                Report obj = new Report();
+                obj.setId(id);
+
+                result.add(obj);
+
+            }
+            result.forEach(x -> System.out.println(x));
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result.get(0);
+    }
+
+    public void createReport(ReportRequest reportRequest) {
+        List<Report> result = new ArrayList<>();
+
+        String SQL_SELECT = "SELECT schema_name FROM information_schema.schemata WHERE IDENTITY";
+
+        // auto close connection and preparedStatement
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "password1");
+             PreparedStatement preparedStatement = conn.prepareStatement(SQL_SELECT)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("ID");
+
+                Report obj = new Report();
+                obj.setId(id);
+
+                result.add(obj);
+
+            }
+            result.forEach(x -> System.out.println(x));
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Report updateReport(String reportId, String reportId1) {
+        List<Report> result = new ArrayList<>();
+
+        String SQL_SELECT = "SELECT schema_name FROM information_schema.schemata WHERE IDENTITY";
+
+        // auto close connection and preparedStatement
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "password1");
+             PreparedStatement preparedStatement = conn.prepareStatement(SQL_SELECT)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString("ID");
+
+                Report obj = new Report();
+                obj.setId(id);
+
+                result.add(obj);
+
+            }
+            result.forEach(x -> System.out.println(x));
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result.get(0);
     }
 }

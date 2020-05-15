@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fors.reportconstructor.entity.Field;
 import ru.fors.reportconstructor.entity.Report;
+import ru.fors.reportconstructor.entity.Table;
 import ru.fors.reportconstructor.service.ReportService;
 import ru.fors.reportconstructor.service.FinderService;
 import ru.fors.reportconstructor.web.dto.ReportRequest;
@@ -44,13 +46,13 @@ public class ReportController {
 
     @ApiOperation("Get rows for report")
     @GetMapping(value = "fields")
-    public Collection<String> getFields(@RequestParam String table) {
+    public Collection<Field> getFields(@RequestParam String table) {
         return finderService.findFields(table);
     }
 
     @ApiOperation("Get tables for report")
     @GetMapping(value = "tables")
-    public Collection<String> getTables() {
+    public Collection<Table> getTables() {
         return finderService.findTables();
     }
 

@@ -2,6 +2,8 @@ package ru.fors.reportconstructor.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.fors.reportconstructor.entity.Field;
+import ru.fors.reportconstructor.entity.Table;
 
 import java.util.Collection;
 
@@ -19,11 +21,11 @@ public class FinderService {
         return "String";
     }
 
-    public Collection<String> findFields(String table) {
+    public Collection<Field> findFields(String table) {
         return dbService.findRows();
     }
 
-    public Collection<String> findTables() {
+    public Collection<Table> findTables() {
         return dbService.findTables();
     }
 }
